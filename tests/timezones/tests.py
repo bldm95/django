@@ -377,9 +377,9 @@ class NewDatabaseTests(TestCase):
         for use_pytz, connection_tz, expected_type in tests:
             with self.subTest(use_pytz=use_pytz, connection_tz=connection_tz):
                 connection.timezone.clear_cache()
-                with override_settings(USE_DEPRECATED_PYTZ=use_pytz), \
-                     override_database_connection_timezone(connection_tz):
-                    self.assertIsInstance(connection.timezone, expected_type)
+                with self.settings(USE_DEPRECATED_PYTZ=use_pytz):
+                    with override_database_connection_timezone(connection_tz):
+                        self.assertIsInstance(connection.timezone, expected_type)
                 connection.timezone.clear_cache()
 
     def test_query_convert_timezones(self):

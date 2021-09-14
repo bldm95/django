@@ -262,8 +262,9 @@ def make_aware(value, timezone=None, is_dst=IS_DST_PASSED):
         is_dst = None
     else:
         warnings.warn(
-            'The is_dst argument to make_aware() is deprecated as it has no '
-            'effect with zoneinfo time zones.',
+            'The is_dst argument to make_aware(), used by the Trunc() '
+            'database functions and QuerySet.datetimes(), is deprecated as it '
+            'has no effect with zoneinfo time zones.',
             RemovedInDjango50Warning
         )
     if timezone is None:

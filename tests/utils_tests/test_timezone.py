@@ -279,6 +279,15 @@ class TimezoneTests(SimpleTestCase):
         self.assertEqual(std.utcoffset(), datetime.timedelta(hours=1))
         self.assertEqual(dst.utcoffset(), datetime.timedelta(hours=2))
 
+    def test_make_aware_is_dst_deprecation_warning(self):
+        msg = (
+            'The is_dst argument to make_aware(), used by the Trunc() '
+            'database functions and QuerySet.datetimes(), is deprecated as it '
+            'has no effect with zoneinfo time zones.'
+        )
+        with self.assertRaisesMessage(RemovedInDjango50Warning, msg):
+            timezone.make_aware(datetime.datetime(2011, 9, 1, 13, 20, 30), EAT, is_dst=True)
+
     def test_get_timezone_name(self):
         """
         The _get_timezone_name() helper must return the offset for fixed offset
