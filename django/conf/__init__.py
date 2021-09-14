@@ -23,9 +23,9 @@ ENVIRONMENT_VARIABLE = "DJANGO_SETTINGS_MODULE"
 
 # RemovedInDjango50Warning
 USE_DEPRECATED_PYTZ_DEPRECATED_MSG = (
-    "The USE_DEPRECATED_PYTZ setting, and support for pytz timezones is "
-    "deprecated in favor of the stdlib zoneinfo module. Please update your "
-    "code to use zoneinfo and remove the USE_DEPRECATED_PYTZ setting."
+    'The USE_DEPRECATED_PYTZ setting, and support for pytz timezones is '
+    'deprecated in favor of the stdlib zoneinfo module. Please update your '
+    'code to use zoneinfo and remove the USE_DEPRECATED_PYTZ setting.'
 )
 
 USE_L10N_DEPRECATED_MSG = (
@@ -255,7 +255,6 @@ class UserSettingsHolder:
         if name == 'USE_L10N':
             warnings.warn(USE_L10N_DEPRECATED_MSG, RemovedInDjango50Warning)
         super().__setattr__(name, value)
-
         if name == 'USE_DEPRECATED_PYTZ':
             warnings.warn(USE_DEPRECATED_PYTZ_DEPRECATED_MSG, RemovedInDjango50Warning)
 

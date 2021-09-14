@@ -2767,10 +2767,10 @@ Default: ``False``
 A boolean that specifies whether to use ``pytz``, rather than :mod:`zoneinfo`,
 as the default time zone implementation.
 
-.. note::
+.. deprecated:: 4.0
 
-    This is a transitional setting to aid the migration to ``zoneinfo``. It
-    will be removed in Django 5.0, and will trigger a warning if enabled.
+    This transitional setting is deprecated. Support for using ``pytz`` will be
+    removed in Django 5.0.
 
 .. setting:: USE_I18N
 
