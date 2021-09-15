@@ -3,6 +3,7 @@ Timezone-related classes and functions.
 """
 
 import functools
+import sys
 import warnings
 
 try:
@@ -291,15 +292,29 @@ def make_naive(value, timezone=None):
     return value.astimezone(timezone).replace(tzinfo=None)
 
 
+_PYTZ_IMPORTED = False
+
+
+def _pytz_imported():
+    """Detects whether or not pytz has been imported without importing pytz."""
+    global _PYTZ_IMPORTED
+
+    if not _PYTZ_IMPORTED and "pytz" in sys.modules:
+        _PYTZ_IMPORTED = True
+
+    return _PYTZ_IMPORTED
+
+
 def _is_pytz_zone(tz):
     """Checks if a zone is a pytz zone."""
-    # Try import rather than checking settings.USE_DEPRECATED_PYTZ to *allow*
-    # manually passing a pytz timezone, which some of the test cases (at least)
-    # rely on.
-    try:
-        import pytz
-    except ImportError:
+    # See if pytz was already imported rather than checking
+    # settings.USE_DEPRECATED_PYTZ to *allow* manually passing a pytz timezone,
+    # which some of the test cases (at least) rely on.
+    if not _pytz_imported():
         return False
+
+    # If tz could be pytz, then pytz is needed here.
+    import pytz
 
     _PYTZ_BASE_CLASSES = (pytz.tzinfo.BaseTzInfo, pytz._FixedOffset)
     # In releases prior to 2018.4, pytz.UTC was not a subclass of BaseTzInfo
